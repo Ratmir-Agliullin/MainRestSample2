@@ -1,5 +1,7 @@
 package models;
 
+import org.json.simple.JSONObject;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -15,7 +17,9 @@ public class RestController {
     @Produces(MediaType.APPLICATION_JSON)
     public String calc(@PathParam(value = "arg1") int a){
   RandomNumber randomNumber = new RandomNumber();
-       return randomNumber.newNumber(a);
+        JSONObject obj = new JSONObject();
+        obj.put("value",randomNumber.newNumber(a));
+       return obj.toString() ;
 
     }
 
