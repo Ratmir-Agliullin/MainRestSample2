@@ -1,5 +1,9 @@
 package incrementor;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -16,7 +20,15 @@ public class IncHandler {
         }
            InputStream response = connection.getInputStream();
         String answer = new java.util.Scanner(response).nextLine();
-        return Integer.parseInt(answer);
+        JSONParser jsonParser = new JSONParser();
+        Object obj=null;
+        try {
+            obj = jsonParser.parse(answer);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        JSONObject jsonObject = (JSONObject) obj;
+        return Integer.parseInt((String) jsonObject.get("value"));
     }
 
     public static void main(String[] args) {
